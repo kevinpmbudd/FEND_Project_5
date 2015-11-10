@@ -1,0 +1,19 @@
+{
+  "name": "neighborhood_map",
+  "version": "1.0.0",
+  "description": "A map of the hood",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "*.git"
+  },
+  "author": "Kevin Budd <kevin@kevinbudd.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "knockout": "^3.3.0"
+  }
+}
