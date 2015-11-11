@@ -1,13 +1,12 @@
 html, body {
+  background-color: #990000;
+  background-image: -webkit-linear-gradient(#990000, #000000);
+  background-image: linear-gradient(#990000, #000000);
+  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+  font-size: 30px;
   height: 100%;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 #map {
-  height: 100%;
-}
-
-
-
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBQUEsVUFBVztFQUFFLE1BQU0sRUFBRSxJQUFJO0VBQUUsTUFBTSxFQUFFLENBQUM7RUFBRSxPQUFPLEVBQUUsQ0FBQzs7O0FBQ2hELElBQUs7RUFBRSxNQUFNLEVBQUUsSUFBSSIsInNvdXJjZXMiOlsiX2Jhc2Uuc2NzcyJdLCJuYW1lcyI6W10sImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8iLCJzb3VyY2VzQ29udGVudCI6WyJodG1sLCBib2R5IHsgaGVpZ2h0OiAxMDAlOyBtYXJnaW46IDA7IHBhZGRpbmc6IDA7IH1cbiNtYXAgeyBoZWlnaHQ6IDEwMCU7IH1cblxuIl19 */
+  height: 100%; }

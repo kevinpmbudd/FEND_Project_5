@@ -1,25 +1,31 @@
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
-    sass = require('gulp-ruby-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    webserver = require('gulp-webserver');
+    sass = require('gulp-sass'),
+    // sourcemaps = require('gulp-sourcemaps'),
+    webserver = require('gulp-webserver'),
+    bourbon = require('node-bourbon');
 
 gulp.task('js', function() {
-  return gulp.src(['build/js/app.js', 'build/js/lib/*.js'])
+  return gulp.src('build/js/app.js')
     .pipe(jshint('./.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('sass', function () {
-    return sass('sass/style.scss', {
-      sourcemap: true,
-      style: 'expanded'
-    })
-    .on('error', function (err) {
-        console.error('Error!', err.message);
-    })
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('build/css'));
+  gulp.src('sass/style.scss')
+    .pipe(sass({
+      includePaths: bourbon.includePaths
+    }))
+   .pipe(gulp.dest('build/css/'));
+    // return sass('sass/style.scss', {
+    //   sourcemap: true,
+    //   style: 'expanded'
+    // })
+    // .on('error', function (err) {
+    //     console.error('Error!', err.message);
+    // })
+    // .pipe(sourcemaps.write())
+    // .pipe(gulp.dest('build/css'));
 });
 
 gulp.task('watch', function() {
