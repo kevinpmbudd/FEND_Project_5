@@ -19,6 +19,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-webserver": "^0.9.1",
     "jquery": "^2.1.4",
+    "jshint-stylish": "^2.0.1",
     "knockout": "^3.3.0"
   }
 }

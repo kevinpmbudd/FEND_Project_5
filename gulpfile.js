@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     webserver = require('gulp-webserver');
 
 gulp.task('js', function() {
-  return gulp.src('build/js/app.js')
+  return gulp.src(['build/js/app.js', 'build/js/lib/*.js'])
     .pipe(jshint('./.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'));
 });
@@ -35,4 +35,4 @@ gulp.task('webserver', function() {
         }));
 });
 
-gulp.task('default', ['watch', 'sass','webserver']);
+gulp.task('default', ['watch', 'sass', 'webserver']);
