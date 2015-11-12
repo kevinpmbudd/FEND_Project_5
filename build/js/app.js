@@ -1,88 +1,85 @@
-// var googleAPIKey = AIzaSyBqKk_buo1F45vURvpqTQqZz4JyopNL9hQ;
 var map;
+
 //data model of locations
-var locations = [
-		{
-			lat: 34.00,
-			lng: -118.25,
-	    title: 'Intelligentsia - Silverlake'
-		},
-		{
-			lat: 34.01,
-			lng: -118.25,
-	    title: 'Intelligentsia - Venice'
-		},
-		{
-			lat: 34.02,
-			lng: -118.25,
-	    title: 'Espresso Cielo'
-		},
-		{
-			lat: 34.03,
-			lng: -118.25,
-	    title: 'Blue Bottle Coffee'
-		},
-		{
-			lat: 34.04,
-			lng: -118.25,
-	    title: 'Intelligentsia - Pasadena'
-		}
-	];
+var locations = [{
+    lat: 34.00,
+    lng: -118.25,
+    title: 'Intelligentsia - Silverlake'
+}, {
+    lat: 34.01,
+    lng: -118.25,
+    title: 'Intelligentsia - Venice'
+}, {
+    lat: 34.02,
+    lng: -118.25,
+    title: 'Espresso Cielo'
+}, {
+    lat: 34.03,
+    lng: -118.25,
+    title: 'Blue Bottle Coffee'
+}, {
+    lat: 34.04,
+    lng: -118.25,
+    title: 'Intelligentsia - Pasadena'
+}];
 
 var initMap = function() {
+	  // var map;
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 34.0,
+            lng: -118.25
+        },
+        zoom: 11
+    });
 
-		map = new google.maps.Map(document.getElementById('map'), {
-					center: {lat: 34.0, lng: -118.25},
-					zoom: 11
-		});
+    // locations.forEach(function (location) {
+    // 	Marker(location);
+    // });
+		for (i = 0; i < ViewModel.locationList().length; i++) {
+			location = ViewModel.locationList()[i];
 
-		// var marker = new google.maps.Marker({
-		// 	position: {lat: 34.0, lng: -118.25},
-		// 	map: map,
-		// 	title: "One"
-		// });
+			Marker( location );
+		}
 };
 
 var Marker = function( data ) {
-	this.lng = ko.observable( data.lng );
-	this.lat = ko.observable( data.lat );
-	this.title = ko.observable( data.title );
+		var self = this;
 
-	console.log( data );
-	console.log( this.lng() );
-	console.log( this.lat() );
-	console.log( this.title() );
+    this.lng = ko.observable(data.lng);
+    this.lat = ko.observable(data.lat);
+    this.title = ko.observable(data.title);
 
-	marker = new google.maps.Marker({
-		position: {lat: this.lat(), lng: this.lng()},
-		map: map,
-		title: this.title()
-	});
-
-	console.log(marker);
-
+    var marker = new google.maps.Marker({
+        position: {
+            lat: this.lat(),
+            lng: this.lng()
+        },
+        map: map,
+        title: this.title()
+    });
 };
 
 
 var ViewModel = function() {
-	var self = this;
+    var self = this;
 
-	this.locationList = ko.observableArray( [] );
+    this.locationList = ko.observableArray([]);
 
-	locations.forEach( function ( location ) {
-		self.locationList.push( new Marker ( location ) );
-	});
+    locations.forEach(function(location) {
+        self.locationList.push( location );
+    });
 
-	this.currentLocation = ko.observable( this.locationList()[0] );
+    this.currentLocation = ko.observable(this.locationList()[0]);
 
-	this.locationPicker = function( location ) {
-		self.currentLocation( location );
-	}
+    this.locationPicker = function(location) {
+        self.currentLocation(location);
+    };
 
-	this.listviewClick = function ( location ) {
-		console.log( location.title );
-		Marker( location );
-	};
+    this.listviewClick = function(location) {
+        console.log(location.title);
+    };
+
 };
 
 ko.applyBindings(new ViewModel());
