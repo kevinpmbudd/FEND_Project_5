@@ -23,6 +23,12 @@ var locations = [{
     title: 'Intelligentsia - Pasadena'
 }];
 
+var Location = function ( lat, lng, title ) {
+	this.lat = lat;
+	this.lng = lng;
+	this.title = title;
+};
+
 var initMap = function() {
 	  // var map;
     map = new google.maps.Map(document.getElementById('map'), {
@@ -36,11 +42,11 @@ var initMap = function() {
     // locations.forEach(function (location) {
     // 	Marker(location);
     // });
-		for (i = 0; i < ViewModel.locationList().length; i++) {
-			location = ViewModel.locationList()[i];
+		// for (i = 0; i < ViewModel.locationList().length; i++) {
+		// 	location = ViewModel.locationList()[i];
 
-			Marker( location );
-		}
+		// 	Marker( location );
+		// }
 };
 
 var Marker = function( data ) {
@@ -60,14 +66,31 @@ var Marker = function( data ) {
     });
 };
 
+ko.utils.stringStartsWith = function(string, startsWith) {
+    string = string || "";
+    if (startsWith.length > string.length) return false;
+    return string.substring(0, startsWith.length) === startsWith;
+};
+
 
 var ViewModel = function() {
     var self = this;
 
-    this.locationList = ko.observableArray([]);
+    self.locationList = ko.observableArray( locations );
 
-    locations.forEach(function(location) {
-        self.locationList.push( location );
+    self.locationList = ko.observableArray(
+    	ko.utils.arrayMap( this.locationList(), function( location ) {
+        return new Location ( location.lat, location.lng, location.title );
+    }));
+
+    this.titleSearch = ko.observable('');
+
+    this.filteredLocations = ko.computed( function () {
+    	return ko.utils.arrayFilter(self.locationList(), function( location ) {
+    		return (self.titleSearch().length == 0 ||
+    			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
+
+    	});
     });
 
     this.currentLocation = ko.observable(this.locationList()[0]);
@@ -79,7 +102,6 @@ var ViewModel = function() {
     this.listviewClick = function(location) {
         console.log(location.title);
     };
-
 };
 
 ko.applyBindings(new ViewModel());
