@@ -2,24 +2,36 @@ var map;
 
 //data model of locations
 var locations = [{
-    lat: 34.00,
-    lng: -118.25,
+    lat: 34.091966,
+    lng: -118.279965,
     title: 'Intelligentsia - Silverlake'
 }, {
-    lat: 34.01,
-    lng: -118.25,
+    lat: 33.991111,
+    lng: -118.466812,
     title: 'Intelligentsia - Venice'
 }, {
-    lat: 34.02,
-    lng: -118.25,
+    lat: 33.998110,
+    lng: -118.479512,
     title: 'Espresso Cielo'
 }, {
-    lat: 34.03,
-    lng: -118.25,
-    title: 'Blue Bottle Coffee'
+    lat: 34.038812,
+    lng: -118.232656,
+    title: 'Blue Bottle Coffee - Arts District'
 }, {
-    lat: 34.04,
-    lng: -118.25,
+    lat: 33.992004,
+    lng: -118.470488,
+    title: 'Blue Bottle Coffee - Abbot Kinney'
+}, {
+    lat: 34.076009,
+    lng: -118.370111,
+    title: 'Blue Bottle Coffee - Beverly Grove Cafe'
+}, {
+    lat: 34.078993,
+    lng: -118.309309,
+    title: 'LaB - Coffee and Roasters'
+}, {
+    lat: 34.145864,
+    lng: -118.151678,
     title: 'Intelligentsia - Pasadena'
 }];
 
@@ -72,13 +84,33 @@ ko.utils.stringStartsWith = function(string, startsWith) {
     return string.substring(0, startsWith.length) === startsWith;
 };
 
+ko.computed.fn.sortByProperty = function(prop) {
+  	this.sort(function(obj1, obj2) {
+  		if (obj1[prop] == obj2[prop])
+  			return 0;
+  		else if (obj1[prop] < obj2[prop])
+  			return -1 ;
+  		else
+  			return 1;
+  	});
+};
 
 var ViewModel = function() {
     var self = this;
 
-    self.locationList = ko.observableArray( locations );
+    var compare = function(a,b) {
+  		if (a.title < b.title)
+    		return -1;
+  		if (a.title > b.title)
+    		return 1;
+  		return 0;
+		}
 
-    self.locationList = ko.observableArray(
+		locations.sort(compare);
+
+    this.locationList = ko.observableArray( locations );
+
+    this.locationList = ko.observableArray(
     	ko.utils.arrayMap( this.locationList(), function( location ) {
         return new Location ( location.lat, location.lng, location.title );
     }));
@@ -89,9 +121,10 @@ var ViewModel = function() {
     	return ko.utils.arrayFilter(self.locationList(), function( location ) {
     		return (self.titleSearch().length == 0 ||
     			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
-
     	});
     });
+
+    console.log(this.filteredLocations());
 
     this.currentLocation = ko.observable(this.locationList()[0]);
 
