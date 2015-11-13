@@ -21,6 +21,7 @@
     "jquery": "^2.1.4",
     "jshint-stylish": "^2.0.1",
     "knockout": "^3.3.0",
-    "node-bourbon": "^4.2.3"
+    "node-bourbon": "^4.2.3",
+    "node-neat": "^1.7.2"
   }
 }

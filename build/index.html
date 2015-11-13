@@ -8,22 +8,24 @@
 </head>
 <body>
 
-  <div>
-
+<div class="page">
+  <div class="head">
  		<p>Coffee LA</p>
-
   </div>
 
-  <div>
-  	Name: <input data-bind="value: titleSearch, valueUpdate: 'afterkeydown'" />
-  </div>
-  <div>
+  <aside>
+  	Name: <input data-bind="value: titleSearch, valueUpdate: 'afterkeydown', click: updateMarkers" />
+  </aside>
+
+  <article>
     <ul data-bind="foreach: filteredLocations">
         <li data-bind="text: title, click: $root.listviewClick"></li>
     </ul>
-  </div>
+  </article>
 
   <div id="map"></div>
+
+</div>
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqKk_buo1F45vURvpqTQqZz4JyopNL9hQ&callback=initMap"></script>
   <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->

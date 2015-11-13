@@ -1,5 +1,5 @@
-var map;
-
+var map,
+	  VM;
 //data model of locations
 var locations = [{
     lat: 34.091966,
@@ -51,15 +51,37 @@ var initMap = function() {
         zoom: 11
     });
 
-    // locations.forEach(function (location) {
-    // 	Marker(location);
-    // });
-		// for (i = 0; i < ViewModel.locationList().length; i++) {
-		// 	location = ViewModel.locationList()[i];
+    // console.log(VM.filteredLocations());
 
-		// 	Marker( location );
-		// }
+	  renderMarkers();
 };
+
+var renderMarkers = function () {
+	VM.filteredLocations().forEach(function (location) {
+	    	Marker ( location );
+	    });
+	// console.log(VM.filteredLocations());
+};
+
+// var locationFilter = function () {
+// 		this.locationList = ko.observableArray( locations );
+
+//     this.locationList = ko.observableArray(
+//     	ko.utils.arrayMap( this.locationList(), function( location ) {
+//         return new Location ( location.lat, location.lng, location.title );
+//     }));
+
+//     this.titleSearch = ko.observable('');
+
+//     this.filteredLocations = ko.computed( function () {
+//     	return ko.utils.arrayFilter(self.locationList(), function( location ) {
+//     		return (self.titleSearch().length == 0 ||
+//     			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
+//     	});
+//     });
+
+//     return this.filteredLocations();
+// }
 
 var Marker = function( data ) {
 		var self = this;
@@ -74,8 +96,17 @@ var Marker = function( data ) {
             lng: this.lng()
         },
         map: map,
-        title: this.title()
+        title: this.title(),
+        visible: true
     });
+};
+
+var compare = function(a,b) {
+		if (a.title < b.title)
+  		return -1;
+		if (a.title > b.title)
+  		return 1;
+		return 0;
 };
 
 ko.utils.stringStartsWith = function(string, startsWith) {
@@ -84,57 +115,43 @@ ko.utils.stringStartsWith = function(string, startsWith) {
     return string.substring(0, startsWith.length) === startsWith;
 };
 
-ko.computed.fn.sortByProperty = function(prop) {
-  	this.sort(function(obj1, obj2) {
-  		if (obj1[prop] == obj2[prop])
-  			return 0;
-  		else if (obj1[prop] < obj2[prop])
-  			return -1 ;
-  		else
-  			return 1;
-  	});
-};
-
 var ViewModel = function() {
     var self = this;
 
-    var compare = function(a,b) {
-  		if (a.title < b.title)
-    		return -1;
-  		if (a.title > b.title)
-    		return 1;
-  		return 0;
-		}
-
 		locations.sort(compare);
 
-    this.locationList = ko.observableArray( locations );
+    self.locationList = ko.observableArray( locations );
 
-    this.locationList = ko.observableArray(
+    self.locationList = ko.observableArray(
     	ko.utils.arrayMap( this.locationList(), function( location ) {
         return new Location ( location.lat, location.lng, location.title );
     }));
 
-    this.titleSearch = ko.observable('');
+    self.titleSearch = ko.observable('');
 
-    this.filteredLocations = ko.computed( function () {
+    self.filteredLocations = ko.computed( function () {
     	return ko.utils.arrayFilter(self.locationList(), function( location ) {
     		return (self.titleSearch().length == 0 ||
     			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
     	});
     });
 
-    console.log(this.filteredLocations());
+    self.currentLocation = ko.observable(this.locationList()[0]);
 
-    this.currentLocation = ko.observable(this.locationList()[0]);
-
-    this.locationPicker = function(location) {
+    self.locationPicker = function(location) {
         self.currentLocation(location);
     };
 
-    this.listviewClick = function(location) {
-        console.log(location.title);
+    self.listviewClick = function(location) {
+        // console.log(self.filteredLocations());
+    };
+
+    self.updateMarkers = function() {
+    	renderMarkers();
+    	return true;
     };
 };
 
-ko.applyBindings(new ViewModel());
+VM = new ViewModel();
+
+ko.applyBindings(VM);

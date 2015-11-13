@@ -1,7 +1,7 @@
 html, body {
 	@include linear-gradient(#D07373, #000000);
 	font-family: $helvetica;
-	font-size: 30px;
+	font-size: 20px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -9,4 +9,25 @@ html, body {
 
 #map {
 	height: 100%;
+}
+
+.page {
+  @include outer-container;
+  .head {
+  	@include fill-parent();
+  	@include row(table);
+  }
+  aside {
+  	@include span-columns(4);
+		@include pad();
+	}
+	article {
+		@include span-columns(8);
+		@include reset-display;
+		@include pad();
+	}
+	// #map {
+	// 	// height: 100%;
+	// 	@include span-columns(12);
+	// }
 }
