@@ -1,5 +1,6 @@
 var map,
 	  VM;
+var markers = [];
 //data model of locations
 var locations = [{
     lat: 34.091966,
@@ -42,46 +43,27 @@ var Location = function ( lat, lng, title ) {
 };
 
 var initMap = function() {
-	  // var map;
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 34.0,
             lng: -118.25
         },
-        zoom: 11
+        zoom: 11,
+        zoomControl: true,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
     });
-
-    // console.log(VM.filteredLocations());
-
-	  renderMarkers();
+    // setMapOnAll(map);
+	  // renderMarkers();
 };
 
-var renderMarkers = function () {
-	VM.filteredLocations().forEach(function (location) {
-	    	Marker ( location );
-	    });
-	// console.log(VM.filteredLocations());
+var renderMarkers = function (locations) {
+
+	for (var i = 0; locations.length; i ++) {
+		Marker( locations[i]);
+	}
+
 };
-
-// var locationFilter = function () {
-// 		this.locationList = ko.observableArray( locations );
-
-//     this.locationList = ko.observableArray(
-//     	ko.utils.arrayMap( this.locationList(), function( location ) {
-//         return new Location ( location.lat, location.lng, location.title );
-//     }));
-
-//     this.titleSearch = ko.observable('');
-
-//     this.filteredLocations = ko.computed( function () {
-//     	return ko.utils.arrayFilter(self.locationList(), function( location ) {
-//     		return (self.titleSearch().length == 0 ||
-//     			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
-//     	});
-//     });
-
-//     return this.filteredLocations();
-// }
 
 var Marker = function( data ) {
 		var self = this;
@@ -97,61 +79,88 @@ var Marker = function( data ) {
         },
         map: map,
         title: this.title(),
-        visible: true
+        animation: google.maps.Animation.DROP
     });
+
+    markers.push(marker);
 };
 
-var compare = function(a,b) {
-		if (a.title < b.title)
-  		return -1;
-		if (a.title > b.title)
-  		return 1;
-		return 0;
+// Sets the map on all markers in the array.
+var setMapOnAll = function() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+};
+
+var clearMarkers = function() {
+  setMapOnAll(null);
+};
+
+var deleteMarkers = function() {
+  clearMarkers();
+  console.log(markers);
+  markers = [];
+
 };
 
 ko.utils.stringStartsWith = function(string, startsWith) {
     string = string || "";
-    if (startsWith.length > string.length) return false;
+    if (startsWith.length > string.length)
+    	return false;
     return string.substring(0, startsWith.length) === startsWith;
 };
 
 var ViewModel = function() {
     var self = this;
 
+    var compare = function(a,b) {
+  		if (a.title < b.title)
+    		return -1;
+  		if (a.title > b.title)
+    		return 1;
+  		return 0;
+		}
+
 		locations.sort(compare);
 
-    self.locationList = ko.observableArray( locations );
+    this.locationList = ko.observableArray( locations );
 
-    self.locationList = ko.observableArray(
+    this.locationList = ko.observableArray(
     	ko.utils.arrayMap( this.locationList(), function( location ) {
         return new Location ( location.lat, location.lng, location.title );
     }));
 
-    self.titleSearch = ko.observable('');
+    this.titleSearch = ko.observable('');
 
-    self.filteredLocations = ko.computed( function () {
+    this.filteredLocations = ko.computed( function () {
     	return ko.utils.arrayFilter(self.locationList(), function( location ) {
     		return (self.titleSearch().length == 0 ||
     			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
     	});
     });
 
-    self.currentLocation = ko.observable(this.locationList()[0]);
+    $( document ).ready(function() {
+    	renderMarkers(self.filteredLocations());
+    });
 
-    self.locationPicker = function(location) {
+    this.filteredLocations.subscribe(function() {
+    	deleteMarkers();
+    	renderMarkers(self.filteredLocations());
+   	});
+
+    this.currentLocation = ko.observable(this.locationList()[0]);
+
+    this.locationPicker = function(location) {
         self.currentLocation(location);
     };
 
-    self.listviewClick = function(location) {
-        // console.log(self.filteredLocations());
-    };
-
-    self.updateMarkers = function() {
-    	renderMarkers();
-    	return true;
+    this.listviewClick = function(location) {
+        console.log(location.title);
     };
 };
 
-VM = new ViewModel();
+ko.applyBindings(new ViewModel());
 
-ko.applyBindings(VM);
+// VM = new ViewModel();
+
+// ko.applyBindings(VM);
