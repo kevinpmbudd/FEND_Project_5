@@ -1,5 +1,7 @@
+'use strict';
 var map,
-	  VM;
+    loadMarkers;
+
 var markers = [];
 //data model of locations
 var locations = [{
@@ -53,40 +55,73 @@ var initMap = function() {
         zoomControl: true,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
-    // setMapOnAll(map);
-	  // renderMarkers();
-};
 
-var renderMarkers = function (locations) {
-
-	for (var i = 0; locations.length; i ++) {
-		Marker( locations[i]);
-	}
-
-};
-
-var Marker = function( data ) {
-		var self = this;
-
-    this.lng = ko.observable(data.lng);
-    this.lat = ko.observable(data.lat);
-    this.title = ko.observable(data.title);
-
-    var marker = new google.maps.Marker({
-        position: {
-            lat: this.lat(),
-            lng: this.lng()
-        },
-        map: map,
-        title: this.title(),
-        animation: google.maps.Animation.DROP
+    google.maps.event.addDomListener(window, 'resize', function() {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
     });
+};
 
-    markers.push(marker);
+
+var renderMarkers = function( locations ) {
+    var data;
+
+    var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+      'sandstone rock formation in the southern part of the '+
+      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+      'south west of the nearest large town, Alice Springs; 450&#160;km '+
+      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+      'Aboriginal people of the area. It has many springs, waterholes, '+
+      'rock caves and ancient paintings. Uluru is listed as a World '+
+      'Heritage Site.</p>'+
+      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+      '(last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
+    for (var i = 0; locations.length; i ++) {
+
+        data = locations[i];
+
+        console.log(data);
+
+        // this.lat = ko.observable(data.lat);
+        // this.lng = ko.observable(data.lng);
+        // this.title = ko.observable(data.title);
+
+        var marker = new google.maps.Marker({
+            position: {
+                lat: data.lat,
+                lng: data.lng
+            },
+            map: map,
+            title: data.title,
+            animation: google.maps.Animation.DROP
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(map,marker);
+        });
+
+        markers.push(marker);
+    }
 };
 
 // Sets the map on all markers in the array.
-var setMapOnAll = function() {
+var setMapOnAll = function(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
@@ -98,9 +133,7 @@ var clearMarkers = function() {
 
 var deleteMarkers = function() {
   clearMarkers();
-  console.log(markers);
   markers = [];
-
 };
 
 ko.utils.stringStartsWith = function(string, startsWith) {
@@ -119,48 +152,37 @@ var ViewModel = function() {
   		if (a.title > b.title)
     		return 1;
   		return 0;
-		}
+	}
 
-		locations.sort(compare);
+	locations.sort(compare);
 
-    this.locationList = ko.observableArray( locations );
+    self.locationList = ko.observableArray( locations );
 
-    this.locationList = ko.observableArray(
-    	ko.utils.arrayMap( this.locationList(), function( location ) {
-        return new Location ( location.lat, location.lng, location.title );
-    }));
+    self.query = ko.observable('');
 
-    this.titleSearch = ko.observable('');
-
-    this.filteredLocations = ko.computed( function () {
-    	return ko.utils.arrayFilter(self.locationList(), function( location ) {
-    		return (self.titleSearch().length == 0 ||
-    			ko.utils.stringStartsWith ( location.title.toLowerCase(), self.titleSearch().toLowerCase()))
-    	});
+    self.search = ko.computed( function() {
+        return ko.utils.arrayFilter(self.locationList(), function( location ) {
+            return location.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+         });
     });
-
-    $( document ).ready(function() {
-    	renderMarkers(self.filteredLocations());
-    });
-
-    this.filteredLocations.subscribe(function() {
-    	deleteMarkers();
-    	renderMarkers(self.filteredLocations());
-   	});
-
-    this.currentLocation = ko.observable(this.locationList()[0]);
-
-    this.locationPicker = function(location) {
-        self.currentLocation(location);
-    };
 
     this.listviewClick = function(location) {
         console.log(location.title);
     };
+
+    loadMarkers = function () {
+        renderMarkers(self.search());
+    }
+
 };
 
 ko.applyBindings(new ViewModel());
 
-// VM = new ViewModel();
+$(document).ready(function() {
+    loadMarkers();
+});
 
-// ko.applyBindings(VM);
+$('#search-box').keypress(function () {
+    deleteMarkers();
+    loadMarkers();
+});
