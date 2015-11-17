@@ -4,9 +4,6 @@ html {
 *, *::after, *::before {
   box-sizing: inherit; }
 
-#map {
-  height: 100%; }
-
 html, body {
   font-family: "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-size: 20px;
@@ -14,28 +11,76 @@ html, body {
   margin: 0;
   padding: 0; }
 
-.list-view {
+#map {
+  height: 392px;
+  width: 100%;
+  margin-top: 26px; }
+
+section {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  section::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+form {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  form::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+ul {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 23.23176%;
   background-color: #C4E3F7;
   background-image: -webkit-linear-gradient(#C4E3F7, #E0E0E0);
-  background-image: linear-gradient(#C4E3F7, #E0E0E0); }
+  background-image: linear-gradient(#C4E3F7, #E0E0E0);
+  list-style-type: none;
+  list-style: none;
+  padding-left: 0; }
+  ul:last-child {
+    margin-right: 0; }
+
+li {
+  border: 6px solid white; }
 
 .hero {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
   background-color: #324766;
   background-position: top;
   background-repeat: no-repeat;
-  background-size: cover;
-  padding-bottom: 3em; }
+  background-size: cover; }
+  .hero::after {
+    clear: both;
+    content: "";
+    display: table; }
   .hero .hero-logo img {
     height: 6em;
     margin-bottom: 1em;
     margin-top: 1em; }
   .hero .hero-inner {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 74.41059%;
     max-width: 68em;
     margin-left: auto;
     margin-right: auto;
     margin: auto;
     padding: 0.5em;
-    text-align: center; }
+    text-align: center;
+    margin-top: 60px; }
+    .hero .hero-inner:last-child {
+      margin-right: 0; }
     .hero .hero-inner::after {
       clear: both;
       content: "";
@@ -49,7 +94,8 @@ html, body {
       .hero .hero-inner .hero-copy h1 {
         color: white;
         font-size: 1.6em;
-        margin-bottom: 0.5em; }
+        margin-bottom: 0.5em;
+        letter-spacing: 3px; }
         @media screen and (min-width: 53.75em) {
           .hero .hero-inner .hero-copy h1 {
             font-size: 1.8em; } }

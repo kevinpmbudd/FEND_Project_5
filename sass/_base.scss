@@ -1,6 +1,9 @@
-#map {
-	height: 100%;
-}
+
+// #map {
+//     height: 400px;
+//   width: 100%;
+// }
+
 
 html, body {
 	// @include linear-gradient(#D07373, #000000);
@@ -10,34 +13,30 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+
 }
 
-.list-view {
-	@include linear-gradient(#C4E3F7, #E0E0E0);
-}
+#map { height: 392px;
+        width: 100%;
+        margin-top: 26px;
+      }
 
-// .page {
-//   @include outer-container;
-//   .head {
-//   	@include fill-parent();
-//   	@include row(table);
-//   }
-//   aside {
-//   	@include span-columns(4);
-// 		@include pad();
-// 	}
-// 	article {
-// 		@include span-columns(8);
-// 		@include reset-display;
-// 		@include pad();
-// 	}
-// 	#map {
-// 		height: 100%;
-// 		@include span-columns(12);
-// 	}
-// }
+section {@include outer-container;}
+
+form {@include outer-container;}
+
+ul { @include span-columns(3);
+       @include linear-gradient(#C4E3F7, #E0E0E0);
+       list-style-type: none;
+       list-style:none;
+       padding-left:0;
+
+  }
+li { border:6px solid white;}
+
 
 .hero {
+  @include outer-container;
   $base-border-radius: 3px !default;
   $action-color: #477DCA !default;
   $large-screen: em(860) !default;
@@ -45,16 +44,12 @@ html, body {
   $hero-background-bottom: #20392B;
   $hero-color: white;
   $gradient-angle: 10deg;
-  // $hero-image: '../img/notecardCanon.jpg';
-
-  // @include background(url($hero-image));
 
 
   background-color: #324766;
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-bottom: 3em;
 
   .hero-logo img {
     height: 6em;
@@ -63,11 +58,13 @@ html, body {
   }
 
   .hero-inner {
+    @include span-columns(9);
     @include outer-container;
     @include clearfix;
     margin: auto;
     padding: 0.5em;
     text-align: center;
+    margin-top: 60px;
 
     .hero-copy {
       text-align: center;
@@ -76,6 +73,7 @@ html, body {
         color: $hero-color;
         font-size: 1.6em;
         margin-bottom: 0.5em;
+        letter-spacing: 3px;
 
         @include media($large-screen) {
           font-size: 1.8em;
