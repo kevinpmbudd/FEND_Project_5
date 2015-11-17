@@ -1,6 +1,7 @@
 'use strict';
 var map,
-    loadMarkers;
+    loadMarkers,
+    refreshMarkers;
 
 var markers = [];
 //data model of locations
@@ -96,7 +97,7 @@ var renderMarkers = function( locations ) {
 
         data = locations[i];
 
-        console.log(data);
+        // console.log(data);
 
         // this.lat = ko.observable(data.lat);
         // this.lng = ko.observable(data.lng);
@@ -109,7 +110,8 @@ var renderMarkers = function( locations ) {
             },
             map: map,
             title: data.title,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            visible: true
         });
 
         marker.addListener('click', function() {
@@ -134,6 +136,26 @@ var clearMarkers = function() {
 var deleteMarkers = function() {
   clearMarkers();
   markers = [];
+};
+
+var setVisibilty = function( filteredLocations ) {
+    // console.log(filteredLocations);
+
+    for (var i = 0; i < markers.length; i++) {
+
+
+        for (var j = 0; j < filteredLocations.length; j++) {
+            var filteredMark = filteredLocations[j];
+            console.log(filteredMark.title);
+            // console.log(markers[i]);
+            if (filteredMark.title == markers[i].title) {
+                markers[i].setVisible(true);
+                break;
+            }
+            else
+                markers[i].setVisible(false);
+        }
+    }
 };
 
 ko.utils.stringStartsWith = function(string, startsWith) {
@@ -166,13 +188,21 @@ var ViewModel = function() {
          });
     });
 
+    self.search.subscribe(function() {
+        setVisibilty(self.search());
+    });
+
     this.listviewClick = function(location) {
-        console.log(location.title);
+        // console.log(location.title);
     };
 
     loadMarkers = function () {
         renderMarkers(self.search());
-    }
+    };
+
+    refreshMarkers = function () {
+        setVisibilty(self.search());
+    };
 
 };
 
@@ -182,7 +212,8 @@ $(document).ready(function() {
     loadMarkers();
 });
 
-$('#search-box').keypress(function () {
-    deleteMarkers();
-    loadMarkers();
-});
+// $('#search-box').keypress(function () {
+//     // deleteMarkers();
+//     // loadMarkers();
+//     refreshMarkers();
+// });
