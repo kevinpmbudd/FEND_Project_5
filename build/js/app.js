@@ -2,6 +2,14 @@
 var map,
     loadMarkers;
 
+var CLIENT_ID = 'OUJ3QNUKM33CWHU4G4VIXM5IXPZLNCXWMBUSWFSSA1BQW4YT',
+    CLIENT_SECRET = '42DDHVI3XBNIOB1T4QL5P3MD3HQK5YLP5XJRWEZXQB04D31C',
+    foursquareURL = 'https://api.foursquare.com/v2/venues/search?client_id='
+        + CLIENT_ID + ' &client_secret=' + CLIENT_SECRET + '&v=20130815&ll=34.09,-118.28&query=coffee';
+
+var id = '49bad052f964a520b3531fe3';
+var foursquarePhotosURL = 'https://api.foursquare.com/v2/venues/' + id + '/photos';
+
 var markers = [];
 //data model of locations
 var locations = [{
@@ -62,6 +70,13 @@ var initMap = function() {
         map.setCenter(center);
     });
 };
+
+// https://api.foursquare.com/v2/venues/search
+//   ?client_id=CLIENT_ID
+//   &client_secret=CLIENT_SECRET
+//   &v=20130815
+//   &ll=40.7,-74
+//   &query=sushi
 
 
 var renderMarkers = function( locations ) {
@@ -174,6 +189,12 @@ var ViewModel = function() {
             if (marker.title == location.title) {
                 marker.setAnimation(google.maps.Animation.DROP);
             }
+        });
+
+        $.ajax({
+            url: foursquarePhotosURL
+        }).done(function( data ) {
+            console.log( data );
         });
     };
 

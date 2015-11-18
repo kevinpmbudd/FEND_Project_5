@@ -9,14 +9,14 @@
 </head>
 <body>
 
-  <div class="hero">
+  <div class="top">
     <ul data-bind="foreach: search()">
             <li data-bind="text: title, click: $root.listviewClick"></li>
         </ul>
-  	<div class="hero-inner">
-      <a href="" class="hero-logo"><img src="../img/coffee.png" alt="Logo Image"></a>
-  		<div class="hero-copy">
-  			<h1>Coffee in LA</h1>
+  	<div class="top-inner">
+      <a href="" class="top-logo"><img src="../img/coffee.png" alt="Logo Image"></a>
+  		<div class="top-copy">
+  			<h1>in LA</h1>
   			<p></p>
   		</div>
   	</div>
@@ -28,19 +28,10 @@
     </form>
   </div>
 
-  <section>
-    <!-- <div class="list-view"> -->
-      <!-- <div> -->
-
-      <!-- </div> -->
-    <!-- </div> -->
-
-  </section>
-
   <div id="map"></div>
 
   <script src="js/lib/knockout-latest.debug.js"></script>
-  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="js/lib/jquery-1.11.3.min.js"></script>
   <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqKk_buo1F45vURvpqTQqZz4JyopNL9hQ&callback=initMap">
     </script>

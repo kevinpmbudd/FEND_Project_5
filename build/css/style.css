@@ -5,7 +5,7 @@ html {
   box-sizing: inherit; }
 
 html, body {
-  font-family: "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
   font-size: 20px;
   height: 100%;
   margin: 0;
@@ -14,7 +14,14 @@ html, body {
 #map {
   height: 392px;
   width: 100%;
-  margin-top: 26px; }
+  margin-top: 26px;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  #map::after {
+    clear: both;
+    content: "";
+    display: table; }
 
 section {
   max-width: 68em;
@@ -51,7 +58,7 @@ ul {
 li {
   border: 6px solid white; }
 
-.hero {
+.top {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto;
@@ -59,15 +66,15 @@ li {
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover; }
-  .hero::after {
+  .top::after {
     clear: both;
     content: "";
     display: table; }
-  .hero .hero-logo img {
+  .top .top-logo img {
     height: 6em;
     margin-bottom: 1em;
     margin-top: 1em; }
-  .hero .hero-inner {
+  .top .top-inner {
     float: left;
     display: block;
     margin-right: 2.35765%;
@@ -79,32 +86,32 @@ li {
     padding: 0.5em;
     text-align: center;
     margin-top: 60px; }
-    .hero .hero-inner:last-child {
+    .top .top-inner:last-child {
       margin-right: 0; }
-    .hero .hero-inner::after {
+    .top .top-inner::after {
       clear: both;
       content: "";
       display: table; }
-    .hero .hero-inner::after {
+    .top .top-inner::after {
       clear: both;
       content: "";
       display: table; }
-    .hero .hero-inner .hero-copy {
+    .top .top-inner .top-copy {
       text-align: center; }
-      .hero .hero-inner .hero-copy h1 {
+      .top .top-inner .top-copy h1 {
         color: white;
         font-size: 1.6em;
         margin-bottom: 0.5em;
         letter-spacing: 3px; }
         @media screen and (min-width: 53.75em) {
-          .hero .hero-inner .hero-copy h1 {
+          .top .top-inner .top-copy h1 {
             font-size: 1.8em; } }
-      .hero .hero-inner .hero-copy p {
+      .top .top-inner .top-copy p {
         color: white;
         line-height: 1.4em;
         margin: 0 auto 3em auto; }
         @media screen and (min-width: 53.75em) {
-          .hero .hero-inner .hero-copy p {
+          .top .top-inner .top-copy p {
             font-size: 1.1em;
             max-width: 40%; } }
 
