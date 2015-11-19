@@ -10,23 +10,23 @@
 </head>
 <body>
 
-  <div class="top">
-    <ul data-bind="foreach: search()">
-            <li data-bind="text: title, click: $root.listviewClick"></li>
-        </ul>
-  	<div class="top-inner">
-      <a href="" class="top-logo"><img src="./img/coffee.png" alt="Logo Image"></a>
-  		<div class="top-copy">
-  			<h1>in LA</h1>
-  			<p></p>
-  		</div>
-  	</div>
-  </div>
-
   <div class="search-bar">
     <form role="search">
       <input id="search-box" type="search" data-bind="textInput: query, valueUpdate: 'keyup'" placeholder="Enter Search"></input>
     </form>
+  </div>
+
+  <div class="top">
+    <ul data-bind="foreach: search()">
+        <li data-bind="text: title, click: $root.listviewClick"></li>
+    </ul>
+    <div class="top-inner">
+      <a href="" class="top-logo"><img src="./img/coffee.png" alt="Logo Image"></a>
+  		<div class="top-copy">
+  			<h1>in LA</h1>
+  			<p>Find good coffee in and around Los Angeles</p>
+  		</div>
+  	</div>
   </div>
 
   <div id="map"></div>

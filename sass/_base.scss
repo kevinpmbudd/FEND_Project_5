@@ -1,86 +1,119 @@
 html, body {
-	font-family: $helvetica;
-	font-size: 20px;
-	height: 100%;
-	margin: 0;
-	padding: 0;
+    font-family: $helvetica;
+    font-size: 20px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-#map { height: 392px;
-        width: 100%;
-        margin-top: 26px;
+.search-bar {
+    width: 100%;
+
+    form {
+        position: relative;
+
         @include outer-container;
-      }
+    }
 
-section {@include outer-container;}
+    input {
+        box-sizing: border-box;
+        display: block;
+        margin: 0;
+        position: relative;
+        width: 100%;
+    }
 
-form {@include outer-container;}
+    button {
+        @include position(absolute, 0 0 0 null);
 
-ul { @include span-columns(3);
-       @include linear-gradient(#C4E3F7, #E0E0E0);
-       list-style-type: none;
-       list-style:none;
-       padding-left:0;
+        padding: 5px 10px;
+    }
 
-  }
-li { border:6px solid white;}
+    .search-img {
+        height: 12px;
+        opacity: 0.7;
+    }
+}
 
+#map {
+    height: 392px;
+    width: 100%;
+
+    @include outer-container;
+}
+
+ul {
+    @include span-columns(3);
+
+    @include linear-gradient(#C4E3F7, #E0E0E0);
+
+    list-style-type: none;
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    border: 6px solid white;
+}
 
 .top {
-  @include outer-container;
-  $base-border-radius: 3px !default;
-  $action-color: #477DCA !default;
-  $large-screen: em(860) !default;
-  $hero-background-top: #7F99BE;
-  $hero-background-bottom: #20392B;
-  $hero-color: white;
-  $gradient-angle: 10deg;
-
-
-  background-color: #324766;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  .top-logo img {
-    height: 6em;
-    margin-bottom: 1em;
-    margin-top: 1em;
-  }
-
-  .top-inner {
-    @include span-columns(9);
     @include outer-container;
-    @include clearfix;
-    margin: auto;
-    padding: 0.5em;
-    text-align: center;
-    margin-top: 60px;
 
-    .top-copy {
-      text-align: center;
+    $base-border-radius: 3px !default;
+    $action-color: #477DCA !default;
+    $large-screen: em(860) !default;
+    $hero-background-top: #7F99BE;
+    $hero-background-bottom: #20392B;
+    $hero-color: white;
+    $gradient-angle: 10deg;
 
-      h1 {
-        color: $hero-color;
-        font-size: 1.6em;
-        margin-bottom: 0.5em;
-        letter-spacing: 3px;
+    background-color: #324766;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-        @include media($large-screen) {
-          font-size: 1.8em;
-        }
-      }
-
-      p {
-        color: $hero-color;
-        line-height: 1.4em;
-        margin: 0 auto 3em auto;
-
-        @include media($large-screen) {
-          font-size: 1.1em;
-          max-width: 40%;
-        }
-      }
+    .top-logo img {
+        height: 6em;
+        margin-bottom: 1em;
+        margin-top: 1em;
     }
-  }
+
+    .top-inner {
+        @include span-columns(9);
+
+        @include outer-container;
+
+        @include clearfix;
+
+        margin: auto;
+        padding: 0.5em;
+        text-align: center;
+        margin-top: 60px;
+
+        .top-copy {
+            text-align: center;
+
+            h1 {
+                color: $hero-color;
+                font-size: 1.6em;
+                margin-bottom: 0.5em;
+                letter-spacing: 3px;
+
+                @include media($large-screen) {
+                    font-size: 1.8em;
+                }
+            }
+
+            p {
+                color: $hero-color;
+                line-height: 1.4em;
+                margin: 0 auto 3em auto;
+
+                @include media($large-screen) {
+                    font-size: 1.1em;
+                    max-width: 40%;
+                }
+            }
+        }
+    }
 }
