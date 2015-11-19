@@ -9,6 +9,7 @@ var locations = [{
     lng: -118.279965,
     title: 'Intelligentsia - Silverlake',
     yelpID: 'intelligentsia-coffee-los-angeles-4',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -17,6 +18,7 @@ var locations = [{
     lng: -118.466812,
     title: 'Intelligentsia - Venice',
     yelpID: 'intelligentsia-coffee-venice',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -25,6 +27,7 @@ var locations = [{
     lng: -118.479512,
     title: 'Espresso Cielo',
     yelpID: 'espresso-cielo-santa-monica',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -33,6 +36,7 @@ var locations = [{
     lng: -118.232656,
     title: 'Blue Bottle Coffee - Arts District',
     yelpID: 'blue-bottle-coffee-los-angeles-12',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -41,6 +45,7 @@ var locations = [{
     lng: -118.470488,
     title: 'Blue Bottle Coffee - Abbot Kinney',
     yelpID: 'blue-bottle-los-angeles-3',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -49,6 +54,7 @@ var locations = [{
     lng: -118.370111,
     title: 'Blue Bottle Coffee - Beverly Grove Cafe',
     yelpID: 'blue-bottle-coffee-los-angeles-14',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -57,6 +63,7 @@ var locations = [{
     lng: -118.309309,
     title: 'LaB - Coffee and Roasters',
     yelpID: 'lab-coffee-and-roasters-los-angeles',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -65,6 +72,7 @@ var locations = [{
     lng: -118.151678,
     title: 'Intelligentsia - Pasadena',
     yelpID: 'intelligentsia-coffee-pasadena',
+    yelpRatingImg: null,
     yelpRating: null,
     yelpReviewCount: null,
     marker: null
@@ -90,41 +98,10 @@ var initMap = function() {
     });
 };
 
-// var renderMarkers = function( locations ) {
-//     locations.forEach(function( data ) {
-
-//         console.log( data );
-
-//         var contentString = '<div>' + data.yelpRating + '<br>' + data.yelpReviewCount +'</div>';
-
-//         var infowindow = new google.maps.InfoWindow({
-//           content: contentString
-//         });
-
-//         var marker = new google.maps.Marker({
-//             position: {
-//                 lat: data.lat,
-//                 lng: data.lng
-//             },
-//             map: map,
-//             title: data.title,
-//             animation: google.maps.Animation.DROP,
-//             visible: true
-//         });
-
-//         marker.addListener('click', function() {
-//             infowindow.open(marker.get('map'), marker);
-//         });
-
-//         markers.push(marker);
-//     });
-// };
-
 var renderMarker = function( location ) {
 
-    // console.log( data );
-
-    var contentString = '<div>' + location.yelpRating + '<br>' + location.yelpReviewCount +'</div>';
+    var contentString = '<div>' + location.title + '<br> Yelp Rating: <img src="' + location.yelpRatingImg + '">' + '<br>' +
+      location.yelpRating + ' stars<br>Number of Reviews: ' + location.yelpReviewCount +'</div>';
 
     var infowindow = new google.maps.InfoWindow({
       content: contentString
@@ -144,8 +121,6 @@ var renderMarker = function( location ) {
     marker.addListener('click', function() {
         infowindow.open(marker.get('map'), marker);
     });
-
-    // markers.push(marker);
 
     location.marker = marker;
 
@@ -194,6 +169,8 @@ var yelp = function( location ) {
         $.ajax(settings).done(function ( data ) {
             location.yelpRating = data.rating;
             location.yelpReviewCount = data.review_count;
+            location.yelpRatingImg = data.rating_img_url;
+            console.log(data.rating_img_url);
             renderMarker ( location );
         });
 
@@ -206,8 +183,6 @@ var setVisibilty = function( filteredLocations ) {
 
         for (var j = 0; j < filteredLocations.length; j++) {
             var filteredMark = filteredLocations[j];
-            // console.log(filteredMark.title);
-            // console.log(markers[i]);
             if (filteredMark.title == markers[i].title) {
                 markers[i].setVisible(true);
                 break;
@@ -253,16 +228,8 @@ var ViewModel = function() {
     });
 
     this.listviewClick = function(location) {
-        console.log(location.title);
-        // markers.forEach(function( marker ) {
-        //     if (marker.title == location.title) {
-        //         marker.setAnimation(google.maps.Animation.DROP);
-        //     }
-        // });
         location.marker.setAnimation(google.maps.Animation.DROP);
         google.maps.event.trigger(location.marker, 'click');
-
-        // yelp(location.yelpID);
     };
 
     loadMarkers = function () {
