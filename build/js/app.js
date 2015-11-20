@@ -132,6 +132,7 @@ var initMarker = function(location) {
         infowindow.open(marker.get('map'), marker);
     });
 
+    // store marker in location object and push into markers array
     location.marker = marker;
     markers.push(marker);
 };
@@ -166,6 +167,7 @@ var yelp = function(location) {
         callback: 'cb'
     };
 
+    // use oauth signature js library to calculate an encoded signature for yelp API call
     var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, YELP_CONSUMER_SECRET, YELP_TOKEN_SECRET);
     parameters.oauth_signature = encodedSignature;
 
@@ -173,15 +175,10 @@ var yelp = function(location) {
         url: yelp_url,
         data: parameters,
         cache: true,
-        dataType: 'jsonp',
-        fail: function() {
-            location.yelpRating = "Yelp rating not currently available";
-            location.yelpReviewCount = "Review count not currently available";
-            location.yelpRatingImg = "./img/coffee.png";
-            initMarker(location);
-        }
+        dataType: 'jsonp'
     };
 
+    // make ajax call to yelp API with the settings object and oauth parameters
     $.ajax(settings)
     .done(function(data) {
         location.yelpRating = data.rating;
@@ -232,30 +229,40 @@ var ViewModel = function() {
 
     self.query = ko.observable('');
 
+    // knockout computed object for filtering out search results.
     self.search = ko.computed(function() {
         return ko.utils.arrayFilter(self.locationList(), function(location) {
             return location.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
         });
     });
-
+    // adds subscribe function to self.search to update markers anytime
+    // the contents of self.search change.
     self.search.subscribe(function() {
         setVisibilty(self.search());
     });
-
+    // when an item in listview is clicked animate its map marker and
+    // open its infowindow.
     this.listviewClick = function(location) {
         location.marker.setAnimation(google.maps.Animation.DROP);
         google.maps.event.trigger(location.marker, 'click');
     };
 };
 
+////////////////////////////////////////////////////////////////////
+////  SEND LOCATIONS TO YELP API FUNCTION /////////////////////////
+//
+// # Iterate through locations array and pass each location to the
+//      yelp function to pull in yelp data and create its marker.
 var loadYelp = function() {
     locations.forEach(function(location) {
         yelp(location);
     });
 };
 
+// activate knockout
 ko.applyBindings(new ViewModel());
 
+// once the DOM is ready call loadYelp to make AJAX call for Yelp data
 $(document).ready(function() {
     loadYelp();
 });
