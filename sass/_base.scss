@@ -6,6 +6,10 @@ html, body {
     padding: 0;
 }
 
+img {
+    @include image-rendering(optimizeSpeed);
+}
+
 .main {
     @include outer-container;
 
@@ -24,6 +28,7 @@ html, body {
 
     .search-bar {
         width: 100%;
+        font-size: 34px;
 
         form {
             position: relative;
@@ -35,11 +40,15 @@ html, body {
             margin: 0;
             position: relative;
             width: 100%;
+            padding: 10px;
+            border: solid 5px #c9c9c9;
+            transition: border 0.3s;
+            font-size: 0.8em;
         }
     }
 
     .list {
-        section {
+        ul {
             @include span-columns(3);
             // @include linear-gradient(#C4E3F7, #E0E0E0);
             color: $top-color;
@@ -56,12 +65,16 @@ html, body {
             }
         }
 
-        article {
+        li {
             border: 3px solid white;
             width: 100%;
             &:hover {
                 // border:1px solid black;
                 background: tint(gray, 40%);
+            }
+            &:active {
+                position: relative;
+                top: 2px;
             }
         }
     }

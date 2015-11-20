@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Neighborhood Map</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="https://maps.googleapis.com/maps/api/js?&callback=initMap"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="search-bar">
+        <form role="search">
+          <input id="search-box" type="search" data-bind="textInput: query, valueUpdate: 'keyup'" placeholder="Enter Search"></input>
+        </form>
+      </div> <!--search-bar-->
+      <div class="list">
+        <ul data-bind="foreach: search()">
+          <li data-bind="text: title, click: $root.listviewClick"></li>
+        </ul>
+      </div> <!--list-->
+      <div class="text">
+        <h1>LA</h1>
+        <p>Find good coffee in and around Los Angeles</p>
+      </div> <!--text-->
+      <div class="logo">
+        <img src="./img/coffee.png" alt="coffee cup graphic">
+      </div>
+      <div id="map">
+      </div> <!--map-->
+      <div class="credits">
+        <ul class="bullets">
+          <li class="bullet">
+            <div class="bullet-icon">
+              <a href="http://google.com"><img src="./img/google.jpg" alt="google logo"></a>
+            </div> <!--bullet-icon-->
+            <div class="bullet-content">
+              <p>The map for this app is provided by Google. Thank you
+              to the kind folks at Google for making this map accessible
+              for all to work with.</p>
+            </div> <!--bullet-content-->
+          </li>
+          <li class="bullet">
+            <div class="bullet-icon">
+              <a href="http://yelp.com"><img src="./img/yelp.jpg" alt="yelp logo"></a>
+            </div> <!--bullet-icon-->
+            <div class="bullet-content">
+              <p>The stars and review count for each coffee shop have
+              been pulled in from Yelp. Thank you, good people at
+              Yelp for creating the API that made this possible.</p>
+            </div> <!--bullet-content-->
+          </li>
+        </ul>
+      </div> <!--credits-->
+    </div> <!--main-->
+    <script src="js/lib/knockout-latest.js"></script>
+    <script src="js/lib/jquery-1.11.3.min.js"></script>
+    <script src="js/lib/oauth-signature.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
