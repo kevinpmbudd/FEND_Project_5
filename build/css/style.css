@@ -33,43 +33,45 @@ html, body {
       margin: 0;
       position: relative;
       width: 100%; }
-  .main .list ul {
+  .main .list section {
     float: left;
     display: block;
     margin-right: 2.5641%;
     width: 28.20513%;
-    background-color: #C4E3F7;
-    background-image: -webkit-linear-gradient(#C4E3F7, #E0E0E0);
-    background-image: linear-gradient(#C4E3F7, #E0E0E0);
+    color: white;
     list-style-type: none;
     list-style: none;
     padding-left: 0;
     text-align: center; }
-    .main .list ul:last-child {
+    .main .list section:last-child {
       margin-right: 0; }
     @media screen and (max-width: 768px) {
-      .main .list ul {
+      .main .list section {
         float: left;
         display: block;
         margin-right: 3.22581%;
         width: 48.3871%; }
-        .main .list ul:last-child {
+        .main .list section:last-child {
           margin-right: 0; } }
     @media screen and (max-width: 480px) {
-      .main .list ul {
+      .main .list section {
         float: left;
         display: block;
         margin-right: 6.66667%;
         width: 100%; }
-        .main .list ul:last-child {
+        .main .list section:last-child {
           margin-right: 0; } }
-  .main .list li {
-    border: 6px solid white; }
+  .main .list article {
+    border: 3px solid white;
+    width: 100%; }
+    .main .list article:hover {
+      background: #b3b3b3; }
   .main .text {
     float: left;
     display: block;
     margin-right: 2.5641%;
     width: 28.20513%;
+    margin-left: 30px;
     text-align: center; }
     .main .text:last-child {
       margin-right: 0; }
@@ -78,7 +80,8 @@ html, body {
         float: left;
         display: block;
         margin-right: 6.66667%;
-        width: 100%; }
+        width: 100%;
+        margin-left: 0; }
         .main .text:last-child {
           margin-right: 0; } }
     .main .text h1 {
@@ -91,13 +94,7 @@ html, body {
           font-size: 3em; } }
       @media screen and (max-width: 480px) {
         .main .text h1 {
-          float: left;
-          display: block;
-          margin-right: 6.66667%;
-          width: 100%;
-          margin: 0 0 10px 0; }
-          .main .text h1:last-child {
-            margin-right: 0; } }
+          display: none; } }
     .main .text p {
       color: white;
       line-height: 1.4em;
@@ -105,25 +102,49 @@ html, body {
       @media screen and (min-width: 48em) {
         .main .text p {
           font-size: 1.5em; } }
-      @media screen and (max-width: 480px) {
+      @media screen and (max-width: 768px) {
         .main .text p {
           float: left;
           display: block;
-          margin-right: 6.66667%;
-          width: 100%;
-          margin: 0 0 10px 0; }
+          margin-right: 3.22581%;
+          width: 74.19355%;
+          font-size: 1.1em; }
           .main .text p:last-child {
             margin-right: 0; } }
+      @media screen and (max-width: 480px) {
+        .main .text p {
+          display: none; } }
   .main .logo {
     float: left;
     display: block;
     margin-right: 2.5641%;
-    width: 28.20513%; }
+    width: 28.20513%;
+    margin-top: 20px;
+    margin-left: 40px; }
     .main .logo:last-child {
       margin-right: 0; }
+    @media screen and (max-width: 768px) {
+      .main .logo {
+        float: left;
+        display: block;
+        margin-right: 3.22581%;
+        width: 22.58065%; }
+        .main .logo:last-child {
+          margin-right: 0; }
+        .main .logo img {
+          height: 100px;
+          width: auto; } }
     @media screen and (max-width: 480px) {
       .main .logo {
-        display: none; } }
+        float: left;
+        display: block;
+        margin-right: 6.66667%;
+        width: 46.66667%; }
+        .main .logo:last-child {
+          margin-right: 0; }
+        .main .logo img {
+          height: 75px;
+          width: auto; } }
   .main #map {
     height: 392px;
     width: 100%;
@@ -163,23 +184,12 @@ html, body {
       flex-grow: 1;
       -ms-flex-positive: 1; }
     .main .bullets .bullet-icon {
-      background: #477DCA;
-      border-radius: 50%;
       float: left;
-      height: 3.5em;
-      padding: 0.875em;
-      width: 3.5em; }
-    .main .bullets .bullet-icon-1 {
-      background: #477DCA; }
-    .main .bullets .bullet-icon-2 {
-      background: #47caaa; }
-    .main .bullets .bullet-icon-3 {
-      background: #a9ca47; }
+      padding: 0.875em; }
     .main .bullets .bullet-content {
       margin-left: 4.9em;
       margin-bottom: 2em; }
     .main .bullets h2 {
-      border-bottom: 1px solid rgba(51, 51, 51, 0.2);
       display: inline-block;
       font-size: 1.4em;
       margin: 0 0 0.58333em 0;
@@ -187,7 +197,7 @@ html, body {
     .main .bullets li {
       list-style: none; }
     .main .bullets p {
-      color: #333;
+      color: white;
       line-height: 1.5em; }
     .main .bullets img {
       max-width: 100%; }

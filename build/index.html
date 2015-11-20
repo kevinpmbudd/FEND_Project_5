@@ -17,9 +17,9 @@
       </div>
 
       <div class="list">
-        <ul data-bind="foreach: search()">
-          <li class="btn" data-bind="text: title, click: $root.listviewClick"></li>
-        </ul>
+        <section data-bind="foreach: search()">
+          <article data-bind="text: title, click: $root.listviewClick"></article>
+        </section>
       </div>
 
       <div class="text">
@@ -37,21 +37,25 @@
       <div class="credits">
         <ul class="bullets">
           <li class="bullet">
-            <div class="bullet-icon bullet-icon-1">
+            <div class="bullet-icon">
               <img src="./img/google.jpg" alt="google logo">
             </div>
             <div class="bullet-content">
               <h2>Google</h2>
-              <p>Lorem dolor sit amet consectetur adipisicing elit. Doloremque, minus, blanditiis, voluptatibus nulla quia ipsam sequi quos iusto aliquam iste magnam accusamus molestias quo illum impedit. Odit officia autem.</p>
+              <p>The map for this app is provided by Google. Thank you
+              to the kind folks at Google for making this map accessible
+              for all to work with.</p>
             </div>
           </li>
           <li class="bullet">
-            <div class="bullet-icon bullet-icon-2">
+            <div class="bullet-icon">
               <img src="./img/yelp.jpg" alt="yelp logo">
             </div>
             <div class="bullet-content">
               <h2>Yelp</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, minus, blanditiis, voluptatibus nulla quia ipsam sequi quos iusto aliquam iste magnam accusamus molestias quo illum.</p>
+              <p>The stars and review count for each coffee shop have
+              been pulled in from Yelp. Thank you to the good people at
+              Yelp for creating the API that made this possible.</p>
             </div>
           </li>
         </ul>
