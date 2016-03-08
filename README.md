@@ -14,4 +14,10 @@ $ gulp
 ```
 will create a local web server to host the application. 
 
+Further,
+```
+$ gulp resources
+```
+will minify and compress resources for a build.
+
 This project is licensed under the terms of the MIT license.
