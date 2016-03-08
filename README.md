@@ -18,6 +18,6 @@ Further,
 ```
 $ gulp resources
 ```
-will minify and compress resources for a build.
+will minify, compress and optimize resources for a build.
 
 This project is licensed under the terms of the MIT license.
